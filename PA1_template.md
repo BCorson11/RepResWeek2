@@ -61,7 +61,7 @@ plot(AvePer5Min$steps ~ AvePer5Min$interval, type = "l",
      ylab = "Average Steps Taken")
 ```
 
-![](PA1_template_files/figure-html/Average Daily Activity-1.png)<!-- -->
+![](PA1_template_files/figure-html/Average_Daily_Activity-1.png)<!-- -->
 
 ```r
 MaxInterval <- with(AvePer5Min, interval[which.max(steps)])
@@ -101,7 +101,7 @@ hist(TotalSteps2, main = "Histogram of Total Number of Steps Per Day (2)",
      xlab = "Total Number of Steps Per Day", ylab = "Count")
 ```
 
-![](PA1_template_files/figure-html/Mean Total Steps Taken Part 2-1.png)<!-- -->
+![](PA1_template_files/figure-html/Mean_Total_Steps_Taken_Part2-1.png)<!-- -->
 
 ```r
 meanTotalSteps2 <- mean(TotalSteps2)
@@ -113,7 +113,7 @@ After inputing the missing values, the mean steps taken per day is 1.0766189\tim
 # Are there differences in activity patterns between weekdays and weekends?
   1. Create a new factor variable in the dataset with two levels – “weekday” and “weekend” indicating whether a given date is a weekday or weekend day.
   2. Make a panel plot containing a time series plot of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis).
-
+-
 
 ```r
 df2$day <- weekdays(df2$date)
@@ -138,4 +138,4 @@ xyplot(AvePer5Min2$steps ~ AvePer5Min2$interval | AvePer5Min2$daytype,
        xlab = "5-Minute Interval", ylab = "Average Steps Taken")
 ```
 
-![](PA1_template_files/figure-html/Weekdays vs Weekends-1.png)<!-- -->
+![](PA1_template_files/figure-html/Weekdays_vs_Weekends-1.png)<!-- -->

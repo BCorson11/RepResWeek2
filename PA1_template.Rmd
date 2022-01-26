@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Loading and preprocessing the data
 
-```{r Set Working Directory and Load data}
+```{r Set_Working_Directory_and_Load_data}
 setwd("C:/Users/Corson/Desktop/Coursera/Rep Research")
 
 df <- read.csv("activity.csv")
@@ -21,7 +21,7 @@ df <- read.csv("activity.csv")
 
 # Here we transform the data into suitable formats.  In particular we transform the date variable into date format.
 
-```{r Transform Data}
+```{r Transform_Data}
 df$date <- as.Date(df$date)
 ```
 
@@ -46,7 +46,7 @@ The mean steps taken per day is `r meanTotalSteps` and the median steps taken pe
   1. Make a time series plot of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis).
   2. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 
-```{r Average Daily Activity}
+```{r Average_Daily_Activity}
 AvePer5Min <- aggregate(steps~interval,data=na.omit(df),mean)
 
 plot(AvePer5Min$steps ~ AvePer5Min$interval, type = "l", 
@@ -65,14 +65,14 @@ The 5 minute interval that contains the highest average number of steps is `r Ma
   3. Create a new dataset that is equal to the original dataset but with the missing data filled in.
   4. Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?
   
-```{r Missing Values}
+```{r Missing_Values}
 
 MissingValues <- sum(is.na(df$steps))
 ```
 
 The total number of NAs in the dataset is `r MissingValues`.
 
-```{r Create New Dataset}
+```{r Create_New_Dataset}
 df2 <- df
 
 for (i in 1:nrow(df2)){
@@ -82,7 +82,7 @@ for (i in 1:nrow(df2)){
   }  
 }
 ```
-```{r  Mean Total Steps Taken Part 2}
+```{r  Mean_Total_Steps_Taken_Part2}
 TotalSteps2 <- with(df2,tapply(steps,date,FUN=sum))
 
 hist(TotalSteps2, main = "Histogram of Total Number of Steps Per Day (2)", 
@@ -97,8 +97,8 @@ After inputing the missing values, the mean steps taken per day is `r meanTotalS
 # Are there differences in activity patterns between weekdays and weekends?
   1. Create a new factor variable in the dataset with two levels – “weekday” and “weekend” indicating whether a given date is a weekday or weekend day.
   2. Make a panel plot containing a time series plot of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis).
-
-```{r Weekdays vs Weekends}
+-
+```{r Weekdays_vs_Weekends}
 df2$day <- weekdays(df2$date)
 
 df2$daytype <- "NA"
