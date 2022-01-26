@@ -38,7 +38,7 @@ hist(TotalSteps, main = "Histogram of Total Number of Steps Per Day",
      xlab = "Total Number of Steps Per Day", ylab = "Count")
 ```
 
-![](PA1_template_files/figure-html/Mean Total Steps Taken-1.png)<!-- -->
+![](PA1_template_files/figure-html/MeanTotalStepsTaken-1.png)<!-- -->
 
 ```r
 meanTotalSteps <- mean(TotalSteps, na.rm = TRUE)
