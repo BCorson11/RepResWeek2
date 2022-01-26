@@ -7,13 +7,12 @@ output:
     keep_md: true
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+
 
 # Loading and preprocessing the data
 
-```{r Set Working Directory and Load data}
+
+```r
 setwd("C:/Users/Corson/Desktop/Coursera/Rep Research")
 
 df <- read.csv("activity.csv")
@@ -21,7 +20,8 @@ df <- read.csv("activity.csv")
 
 # Here we transform the data into suitable formats.  In particular we transform the date variable into date format.
 
-```{r Transform Data}
+
+```r
 df$date <- as.Date(df$date)
 ```
 
@@ -30,34 +30,44 @@ df$date <- as.Date(df$date)
   2. Make a histogram of the total number of steps taken each day.
   3. Calculate and report the mean and median of the total number of steps taken per day.
   
-```{r  Mean Total Steps Taken}
+
+```r
 TotalSteps <- with(df,tapply(steps,date,FUN=sum))
 
 hist(TotalSteps, main = "Histogram of Total Number of Steps Per Day", 
      xlab = "Total Number of Steps Per Day", ylab = "Count")
-  
+```
+
+![](PA1_template_files/figure-html/Mean Total Steps Taken-1.png)<!-- -->
+
+```r
 meanTotalSteps <- mean(TotalSteps, na.rm = TRUE)
 medianTotalSteps <- median(TotalSteps, na.rm = TRUE)
 ```
 
-The mean steps taken per day is `r meanTotalSteps` and the median steps taken per day is `r medianTotalSteps`. 
+The mean steps taken per day is 1.0766189\times 10^{4} and the median steps taken per day is 10765. 
 
 # What is the average daily activity pattern?
   1. Make a time series plot of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis).
   2. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 
-```{r Average Daily Activity}
+
+```r
 AvePer5Min <- aggregate(steps~interval,data=na.omit(df),mean)
 
 plot(AvePer5Min$steps ~ AvePer5Min$interval, type = "l", 
      main = "Time Series Plot",
      xlab = "5-Minute Interval",
      ylab = "Average Steps Taken")
+```
 
+![](PA1_template_files/figure-html/Average Daily Activity-1.png)<!-- -->
+
+```r
 MaxInterval <- with(AvePer5Min, interval[which.max(steps)])
 ```
 
-The 5 minute interval that contains the highest average number of steps is `r MaxInterval`.
+The 5 minute interval that contains the highest average number of steps is 835.
 
 # Imputing missing values
   1. Calculate and report the total number of missing values in the dataset.
@@ -65,14 +75,15 @@ The 5 minute interval that contains the highest average number of steps is `r Ma
   3. Create a new dataset that is equal to the original dataset but with the missing data filled in.
   4. Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?
   
-```{r Missing Values}
 
+```r
 MissingValues <- sum(is.na(df$steps))
 ```
 
-The total number of NAs in the dataset is `r MissingValues`.
+The total number of NAs in the dataset is 2304.
 
-```{r Create New Dataset}
+
+```r
 df2 <- df
 
 for (i in 1:nrow(df2)){
@@ -82,23 +93,29 @@ for (i in 1:nrow(df2)){
   }  
 }
 ```
-```{r  Mean Total Steps Taken Part 2}
+
+```r
 TotalSteps2 <- with(df2,tapply(steps,date,FUN=sum))
 
 hist(TotalSteps2, main = "Histogram of Total Number of Steps Per Day (2)", 
      xlab = "Total Number of Steps Per Day", ylab = "Count")
-  
+```
+
+![](PA1_template_files/figure-html/Mean Total Steps Taken Part 2-1.png)<!-- -->
+
+```r
 meanTotalSteps2 <- mean(TotalSteps2)
 medianTotalSteps2 <- median(TotalSteps2)
 ```
 
-After inputing the missing values, the mean steps taken per day is `r meanTotalSteps2` and the median steps taken per day is `r medianTotalSteps2`.  The mean number of steps is unchanged from when we calculated it previously.  The median number of steps changed a little and is equal to the mean.  When we calculated the mean above we omitted the NAs.  Since we replaced the NAs with an average of a subset of values, it didn't affect the new calculated mean which should be expected.  In recalculating the median, however, the imputed values resulted in a new value.
+After inputing the missing values, the mean steps taken per day is 1.0766189\times 10^{4} and the median steps taken per day is 1.0766189\times 10^{4}.  The mean number of steps is unchanged from when we calculated it previously.  The median number of steps changed a little and is equal to the mean.  When we calculated the mean above we omitted the NAs.  Since we replaced the NAs with an average of a subset of values, it didn't affect the new calculated mean which should be expected.  In recalculating the median, however, the imputed values resulted in a new value.
 
 # Are there differences in activity patterns between weekdays and weekends?
   1. Create a new factor variable in the dataset with two levels – “weekday” and “weekend” indicating whether a given date is a weekday or weekend day.
   2. Make a panel plot containing a time series plot of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis).
 
-```{r Weekdays vs Weekends}
+
+```r
 df2$day <- weekdays(df2$date)
 
 df2$daytype <- "NA"
@@ -120,3 +137,5 @@ xyplot(AvePer5Min2$steps ~ AvePer5Min2$interval | AvePer5Min2$daytype,
        main = "Time Series Plot (Weekends vs. Weekdays)", 
        xlab = "5-Minute Interval", ylab = "Average Steps Taken")
 ```
+
+![](PA1_template_files/figure-html/Weekdays vs Weekends-1.png)<!-- -->
